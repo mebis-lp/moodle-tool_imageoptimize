@@ -30,6 +30,7 @@ $string['files_types_desc'] = 'Wählen Sie die Dateitypen aus, auf die die Optim
 $string['create_desc'] = 'Anwenden der Optimierung beim ersten Hochladen von Dateien';
 $string['update_desc'] = 'Anwenden der Optimierung auf ein Datei-Update';
 $string['more_than'] = 'Optimieren von Dateien größer als x KB';
+$string['less_than'] = 'Optimieren von Dateien kleiner als x KB';
 $string['os_warning'] = 'Derzeit unterstützt das Plugin die Arbeit mit dem Betriebssystem Ihres Servers nicht:<strong>{$a}</strong>';
 $string['exec_warning'] = 'Für die Funktion dieses Plugins müssen Sie einige Einstellungen Ihres Servers vornehmen
                         <ol>
