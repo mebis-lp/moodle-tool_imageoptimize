@@ -116,6 +116,13 @@ if ($hassiteconfig) {
         0,
         PARAM_INT
     ));
+    $settings->add(new admin_setting_configtext(
+        'tool_imageoptimize/less_than',
+        get_string('less_than', 'tool_imageoptimize'),
+        '',
+        0,
+        PARAM_INT
+    ));
 
     // Settings for background jobs.
     $settings->add(new admin_setting_heading(

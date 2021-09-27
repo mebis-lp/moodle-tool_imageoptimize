@@ -29,17 +29,18 @@ $string['files_types_desc'] = 'Select the file types to which optimization will 
 $string['create_desc'] = 'Apply optimization on a first file upload';
 $string['update_desc'] = 'Apply optimization on a file update';
 $string['more_than'] = 'Optimize files more than, Kb';
+$string['less_than'] = 'Optimize files less than, Kb';
 $string['os_warning'] = 'At the moment, the plugin does not support working with the operating system of your server: <strong>{$a}</strong>';
 $string['exec_warning'] = 'For the functioning of this plugin, you need to make some settings of your server
                         <ol>
                             <li>Enable php core function <strong>
-                            <a href="https://www.php.net/manual/en/function.exec.php" 
+                            <a href="https://www.php.net/manual/en/function.exec.php"
                             target="_blank">exec()</a></strong>
                                 <ol>
                                     <li>find the path to the configuration file <strong>php.ini</strong></li>
                                     <li>edit the list of disabled functions in this directive <strong>
-                                    <a href="https://www.php.net/manual/en/ini.core.php#ini.disable-functions" 
-                                    target="_blank">disable_functions</a></strong> in this file, delete from the list 
+                                    <a href="https://www.php.net/manual/en/ini.core.php#ini.disable-functions"
+                                    target="_blank">disable_functions</a></strong> in this file, delete from the list
                                     <strong>exec</strong> and save changes</li>
                                     <li>restart php</li>
                                 </ol>
