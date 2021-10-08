@@ -310,7 +310,7 @@ class tool_image_optimize_helper extends \tool_image_optimize {
         if ($file->pathnamehash != $fileold->pathnamehash) {
             // Throw error to revert db changes.
             //throw new coding_exception('pathnamehashchanged');
-            $DB->update_field('files', 'pathnamehash', $file->pathnamehash, [ 'id' => $file->id ]);
+            $DB->set_field('files', 'pathnamehash', $file->pathnamehash, [ 'id' => $file->id ]);
         }
 
         // Adding the processed file to the file system.
