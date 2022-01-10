@@ -417,7 +417,8 @@ class tool_image_optimize_helper extends \tool_image_optimize {
     protected function update_fileinfo($fileold, $filenew) : void {
         global $DB;
 
-        $relatedreferences = $DB->get_records('files', ['contenthash' => $fileold->contenthash]);
+        $relatedreferences = $DB->get_records_select('files', 'contenthash = :contenthash',
+                ['contenthash' => $fileold->contenthash], '', 'id');
 
         foreach ($relatedreferences as $fileobject) {
             // Update files table.
