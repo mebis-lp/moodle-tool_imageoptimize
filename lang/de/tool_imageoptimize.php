@@ -30,7 +30,6 @@ $string['files_types_desc'] = 'Wählen Sie die Dateitypen aus, auf die die Optim
 $string['create_desc'] = 'Anwenden der Optimierung beim ersten Hochladen von Dateien';
 $string['update_desc'] = 'Anwenden der Optimierung auf ein Datei-Update';
 $string['more_than'] = 'Optimieren von Dateien größer als x KB';
-$string['less_than'] = 'Optimieren von Dateien kleiner als x KB';
 $string['os_warning'] = 'Derzeit unterstützt das Plugin die Arbeit mit dem Betriebssystem Ihres Servers nicht:<strong>{$a}</strong>';
 $string['exec_warning'] = 'Für die Funktion dieses Plugins müssen Sie einige Einstellungen Ihres Servers vornehmen
                         <ol>
@@ -49,7 +48,7 @@ $string['exec_warning'] = 'Für die Funktion dieses Plugins müssen Sie einige E
                             <li>Installieren Sie die für die Komprimierung erforderlichen Pakete für jeden Image-Typ auf dem Server</li>
                         </ol>';
 $string['info_title'] = 'Um die Formatkomprimierungsfunktion <strong> {$a} </strong> zu erweitern, können Sie zusätzliche Pakete für die Komprimierung installieren';
-$string['warning_title'] = 'Installieren Sie eines der Pakete auf Ihrem Server oder alle zusammen, damit die Option angezeigt wird';
+$string['warning_title'] = 'Installieren Sie eines der Pakete auf Ihrem Server oder alle zusammen, damit die Option verwendet werden kann:';
 $string['jpegoptim'] = '<strong> <a href="http://freshmeat.sourceforge.net/projects/jpegoptim" target="_blank"> JpegOptim </a> </strong>
                         <ul>
                             <li> <strong> Debian / Ubuntu </strong>: <code> sudo apt-get install jpegoptim </code> </li>

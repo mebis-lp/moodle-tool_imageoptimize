@@ -14,7 +14,7 @@ class OptimizerChain
     protected $logger;
 
     /** @var int */
-    protected $timeout = 600;
+    protected $timeout = 60;
 
     public function __construct()
     {

@@ -51,33 +51,34 @@ if ($hassiteconfig) {
         ));
     }
 
-    foreach (array_keys(tool_image_optimize::PACKAGES_TYPES) as $imageextension) {
-        if (!$imageoptimize->can_handle_file_extension($imageextension)) {
-            $warning = get_string('warning_title', 'tool_imageoptimize') . '<ol>';
+    foreach (tool_image_optimize::PACKAGES as $package => $imageextension) {
+        if (!get_config('tool_imageoptimize', $package . "_installed")) {
+            if (!$imageoptimize->can_handle_file_extension($imageextension)) {
+                $warning = get_string('warning_title', 'tool_imageoptimize') . '<ol>';
+                foreach (tool_image_optimize::PACKAGES_TYPES[$imageextension] as $package) {
+                    $warning .= '<li>' . get_string($package, 'tool_imageoptimize') . '</li>';
+                }
+                $warning .= '</ol>';
+                $settings->add(new tool_imageoptimize_notification(
+                    'tool_imageoptimize/' . $imageextension . '_head_warninig',
+                    $imageextension . '_head_warninig',
+                    $warning,
+                    'warning'
+                ));
+            }
+            $info = '';
             foreach (tool_image_optimize::PACKAGES_TYPES[$imageextension] as $package) {
-                $warning .= '<li>' . get_string($package, 'tool_imageoptimize') . '</li>';
+                if (!$imageoptimize->check_package($package)) {
+                    $info .= '<li>' . get_string($package, 'tool_imageoptimize') . '</li>';
+                }
             }
-            $warning .= '</ol>';
-            $settings->add(new tool_imageoptimize_notification(
-                'tool_imageoptimize/' . $imageextension . '_head_warninig',
-                $imageextension . '_head_warninig',
-                $warning,
-                'warning'
-            ));
-        }
-
-        $info = '';
-        foreach (tool_image_optimize::PACKAGES_TYPES[$imageextension] as $package) {
-            if (!$imageoptimize->check_package($package)) {
-                $info .= '<li>' . get_string($package, 'tool_imageoptimize') . '</li>';
+            if ($info) {
+                $settings->add(new tool_imageoptimize_notification(
+                    'tool_imageoptimize/extensions_warning',
+                    'extensions_warning',
+                    get_string('info_title', 'tool_imageoptimize') . '<ol>' . $info . '</ol>'
+                ));
             }
-        }
-        if ($info) {
-            $settings->add(new tool_imageoptimize_notification(
-                'tool_imageoptimize/extensions_warning',
-                'extensions_warning',
-                get_string('info_title', 'tool_imageoptimize') . '<ol>' . $info . '</ol>'
-            ));
         }
     }
 
@@ -112,13 +113,6 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configtext(
         'tool_imageoptimize/more_than',
         get_string('more_than', 'tool_imageoptimize'),
-        '',
-        0,
-        PARAM_INT
-    ));
-    $settings->add(new admin_setting_configtext(
-        'tool_imageoptimize/less_than',
-        get_string('less_than', 'tool_imageoptimize'),
         '',
         0,
         PARAM_INT
