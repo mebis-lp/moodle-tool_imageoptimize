@@ -140,6 +140,12 @@ class tool_image_optimize_helper extends \tool_image_optimize {
                 break;
         }
 
+        $lessThan = self::get_config('less_than');
+        if (!empty($lessThan)) {
+            $lessThan = $lessThan*1024; // lessThan is given in kB
+            $lessThan = "filesizeold < $lessThan AND";
+        }
+
         // These complex series of queries is necessary, to get only one file reference for a specific contenthash.
         // Otherwise there could be two files in one chunk with the same contenthash.
         // Because, all references would be processed by the first occurence.
@@ -147,7 +153,7 @@ class tool_image_optimize_helper extends \tool_image_optimize {
         // It could not be done by a simple group by because of PostgreSQL support.
         $sql = "SELECT DISTINCT fileid, contenthashold
                 FROM {tool_imageoptimize_files}
-                WHERE (timeprocessed is null OR timeprocessed = 0) " . $order;
+                WHERE $lessThan (timeprocessed is null OR timeprocessed = 0) " . $order;
 
         // Use e.g. 2 * $maxchunksize because it is possible to get multiple times the same contenthash.
         $rows = $DB->get_records_sql($sql, null, 0, 2 * $maxchunksize);
@@ -250,6 +256,8 @@ class tool_image_optimize_helper extends \tool_image_optimize {
             return false;
         }
 
+        mtrace("Processing file id ($file->id): $file->filename");
+
         // Store old fileobject for later use.
         $fileold = new \stdClass();
         $fileold = clone $file;
@@ -302,7 +310,10 @@ class tool_image_optimize_helper extends \tool_image_optimize {
 
         if ($file->pathnamehash != $fileold->pathnamehash) {
             // Throw error to revert db changes.
-            throw new coding_exception('pathnamehashchanged');
+            // throw new coding_exception('pathnamehashchanged');
+
+            //throw new coding_exception('pathnamehashchanged');
+            $DB->set_field('files', 'pathnamehash', $file->pathnamehash, [ 'id' => $file->id ]);
         }
 
         // Adding the processed file to the file system.
@@ -409,7 +420,8 @@ class tool_image_optimize_helper extends \tool_image_optimize {
     protected function update_fileinfo($fileold, $filenew) : void {
         global $DB;
 
-        $relatedreferences = $DB->get_records('files', ['contenthash' => $fileold->contenthash]);
+        $relatedreferences = $DB->get_records_select('files', 'contenthash = :contenthash',
+                ['contenthash' => $fileold->contenthash], '', 'id');
 
         foreach ($relatedreferences as $fileobject) {
             // Update files table.
@@ -497,7 +509,7 @@ class tool_image_optimize_helper extends \tool_image_optimize {
         // Do the job for one minute.
         while ($timeend - $timestart < 60) {
 
-            $insertfromfileid = get_config('tool_imageoptimize', 'lastprocessedfileid');
+            $insertfromfileid = $DB->get_field_sql('SELECT MAX(fileid) FROM {tool_imageoptimize_files}');
             if (empty($insertfromfileid)) {
                 $insertfromfileid = 0;
             }

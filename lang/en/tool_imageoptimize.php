@@ -29,6 +29,7 @@ $string['files_types_desc'] = 'Select the file types to which optimization will 
 $string['create_desc'] = 'Apply optimization on a first file upload';
 $string['update_desc'] = 'Apply optimization on a file update';
 $string['more_than'] = 'Optimize files more than, Kb';
+$string['less_than'] = 'Optimize files less than, Kb';
 $string['os_warning'] = 'At the moment, the plugin does not support working with the operating system of your server: <strong>{$a}</strong>';
 $string['exec_warning'] = 'For the functioning of this plugin, you need to make some settings of your server
                         <ol>

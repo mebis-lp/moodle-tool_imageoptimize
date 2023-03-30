@@ -140,7 +140,7 @@ class Process implements \IteratorAggregate
      *
      * @throws LogicException When proc_open is not installed
      */
-    public function __construct(array $command, string $cwd = null, array $env = null, mixed $input = null, ?float $timeout = 60)
+    public function __construct(array $command, string $cwd = null, array $env = null, mixed $input = null, ?float $timeout = 600)
     {
         if (!\function_exists('proc_open')) {
             throw new LogicException('The Process class relies on proc_open, which is not available on your PHP installation.');
@@ -187,7 +187,7 @@ class Process implements \IteratorAggregate
      *
      * @throws LogicException When proc_open is not installed
      */
-    public static function fromShellCommandline(string $command, string $cwd = null, array $env = null, mixed $input = null, ?float $timeout = 60): static
+    public static function fromShellCommandline(string $command, string $cwd = null, array $env = null, mixed $input = null, ?float $timeout = 600): static
     {
         $process = new static([], $cwd, $env, $input, $timeout);
         $process->commandline = $command;

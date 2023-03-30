@@ -33,6 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 function xmldb_tool_imageoptimize_upgrade($oldversion) {
     global $CFG, $DB;
+    $dbman = $DB->get_manager();
 
     require_once($CFG->dirroot . "/admin/tool/imageoptimize/db/upgradelib.php");
 
@@ -43,6 +44,15 @@ function xmldb_tool_imageoptimize_upgrade($oldversion) {
 
         // Imageoptimize savepoint reached.
         upgrade_plugin_savepoint(true, 2020060801, 'tool', 'imageoptimize');
+    }
+
+    if ($oldversion < 2021120100) {
+        $table = new xmldb_table('tool_imageoptimize_files');
+        $index = new xmldb_index('contenthashnew', XMLDB_INDEX_NOTUNIQUE, ['contenthashnew']);
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+        upgrade_plugin_savepoint(true, 2021120100, 'tool', 'imageoptimize');
     }
 
     if ($oldversion < 2021122100) {
