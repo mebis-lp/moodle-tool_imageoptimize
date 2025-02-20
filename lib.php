@@ -36,6 +36,10 @@ require_once('tool_imageoptimize.php');
  * @throws \dml_exception
  */
 function tool_imageoptimize_after_file_created(stdClass $filerecord) {
+    // This is an implementation of a legacy callback that will only be called in older Moodle versions.
+    // It will not be called in Moodle versions that contain the hook core_files\hook\after_file_created,
+    // instead, the callback tool_imageoptimize\local\hooks\after_file_created::callback will be executed.
+
     $imageoptimizehelper = tool_image_optimize_helper::get_instance();
     $imageoptimizehelper->get_enabled_mimetypes();
 
