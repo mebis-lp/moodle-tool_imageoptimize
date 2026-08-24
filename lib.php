@@ -28,30 +28,6 @@ use tool_imageoptimize\tool_image_optimize_helper;
 require_once('tool_imageoptimize.php');
 
 /**
- * Handle 'after_file_created' hook
- *
- * @param stdClass $filerecord File record object
- *
- * @return bool
- * @throws \dml_exception
- */
-function tool_imageoptimize_after_file_created(stdClass $filerecord) {
-    $imageoptimizehelper = tool_image_optimize_helper::get_instance();
-    $imageoptimizehelper->get_enabled_mimetypes();
-
-    if(!in_array($filerecord->mimetype,$imageoptimizehelper->enabledmimetypes)){
-        return false;
-    }
-
-    if (empty(get_config('tool_imageoptimize', 'enablebackgroundoptimizing'))) {
-        $obj = new tool_image_optimize($filerecord);
-        return $obj->handle('create');
-    }
-
-    $imageoptimizehelper->insert_fileinfo_depending_on_contenthash($filerecord);
-}
-
-/**
  * Handle 'after_file_updated' hook
  *
  * @param stdClass $filerecord
